@@ -1,0 +1,210 @@
+/* ==========================================================================
+   ALPINE STAY - CHARTE GRAPHIQUE & STYLES GLOBAUX
+   ========================================================================== */
+
+/* 1. Variables de couleurs et thèmes */
+:root {
+  /* Palette principale */
+  --bg-snow: #f4f6f8;       /* Neige / Fond principal blanc cassé */
+  --bg-card: #ffffff;       /* Carte / Blanc pur */
+  --blue-alpine: #2c3e50;   /* Bleu Alpin / Couleur primaire */
+  --blue-hover: #1a252f;    /* Bleu sombre / Survol des boutons */
+  --text-main: #2d3436;     /* Ardoise sombre / Texte principal */
+  --text-muted: #636e72;    /* Gris secondaire */
+  
+  /* UI & Ombres */
+  --border-radius: 12px;
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+  background-color: var(--bg-snow) !important;
+  color: var(--text-main);
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg-alpine {
+  background-color: var(--blue-alpine) !important;
+}
+
+.text-alpine {
+  color: var(--blue-alpine) !important;
+}
+
+.text-main {
+  color: var(--text-main) !important;
+}
+
+.text-secondary {
+  color: #0984e3 !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  color: #ffffff;
+  text-decoration: underline var(--blue-hover);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.text-drop {
+  color: var(--blue-alpine);
+  text-decoration: none;
+}
+
+.text-drop:hover {
+  color: var(--blue-alpine);
+  text-decoration: underline var(--blue-hover);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.btn-alpine {
+  background-color: #ffffff;
+  color: var(--blue-hover);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-alpine:hover {
+  background-color: var(--blue-hover);
+  color: #ffffff;
+}
+
+.btn-outline-alpine {
+  border: 2px solid var(--blue-alpine);
+  color: var(--blue-hover);
+  background-color: none;
+}
+
+.btn-outline-alpine:hover {
+  background-color: var(--blue-hover);
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+}
+
+.btn-outline-none {
+  color: #ffffff !important;
+  border: none;
+  background-color: transparent;
+}
+
+.btn-outline-none:hover,
+.btn-outline-none:focus,
+.btn-outline-none:active,
+.btn-outline-none.show {
+  color: #ffffff !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.cardTransition {
+  transition: transform 0.2s ease;
+}
+
+.cardTransition:hover {
+  transform: translateY(-4px);
+}
+
+.auth-register {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin: 0; 
+  width: 100%;
+}
+
+.auth-register::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.6)),
+              url('../img/authRegister.jpg') center/cover no-repeat fixed;
+  filter: blur(8px);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+.auth-login {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin: 0; 
+  width: 100%;
+}
+
+.auth-login::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.6)),
+              url('../img/authLogin.jpg') center/cover no-repeat fixed;
+  filter: blur(8px);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  min-height: 450px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.4) 70%, #f4f6f8 100%), 
+              url('../img/montagne.jpg') center/cover no-repeat fixed;
+  filter: blur(5px);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+.searchForm {
+  border-radius: 10px;
+  background-color: var(--blue-alpine);
+}
+
+.recentChalet {
+  background-color: #e0e0e2;
+}
