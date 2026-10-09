@@ -85,7 +85,12 @@ export const getMyChalet = async (req, res) => {
 
 export const createChalet = async (req, res) => {
     try {
-        const chaletData = req.body;
+        const imagePath = req.file ? `/uploads/${req.file.filename}` : '/images/default-chalet.jpg';
+
+        const chaletData = {
+            ...req.body,
+            image: imagePath
+        };
         const userId = req.session.user._id;
         const create = await saveChalet(chaletData, userId);
         return res.redirect('/chalet/my-locations')

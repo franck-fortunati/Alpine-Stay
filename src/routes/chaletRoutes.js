@@ -1,5 +1,6 @@
 import express from 'express';
 import { isAuth } from '../middlewares/authMiddleware.js';
+import { upload } from '../middlewares/uploadMiddleware.js';
 
 import {
     getAllChalet,
@@ -19,7 +20,7 @@ router.get('/new', isAuth, getChaletForm);
 router.get('/edit/:id', isAuth, getEditChaletForm)
 router.get('/my-locations', isAuth, getMyChalet)
 router.get('/:id', getChaletById);
-router.post('/', isAuth, createChalet);
+router.post('/', isAuth, upload.single('image'), createChalet);
 router.patch('/:id', isAuth, updateChalet)
 router.delete('/:id', isAuth, deleteChalet)
 

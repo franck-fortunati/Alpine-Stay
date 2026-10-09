@@ -10,9 +10,17 @@ const stationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    altitude: {
-        type: Number,
+    department: {
+        type: String,
         required: true
+    },
+    domainName: {
+        type: String,
+        default: ""
+    },
+    altitude: {
+        min: { type: Number },
+        max: { type: Number }
     },
     description: {
         type: String,
@@ -23,20 +31,11 @@ const stationSchema = new mongoose.Schema({
         required: true
     },
     passSki: {
-        dayPrice: {
-            type: Number,
-            required: true,
-        },
-        weekPrice: {
-            type: Number,
-            required: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        }
+        dayPrice: { type: Number, required: true },
+        weekPrice: { type: Number, required: true },
+        description: { type: String, required: true }
     }
-});
+}, { timestamps: true });
 
 const Station = mongoose.model("Station", stationSchema);
 export default Station;

@@ -200,11 +200,38 @@ body {
   z-index: -1;
 }
 
-.searchForm {
+.alpineForm {
   border-radius: 10px;
   background-color: var(--blue-alpine);
 }
 
+.whiteForm {
+  border-radius: 10px;
+  background-color: var(--bg-card);
+}
+
 .recentChalet {
   background-color: #e0e0e2;
+}
+
+.chaletForm {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin: 0; 
+  width: 100%;
+}
+
+.chaletForm::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.6)),
+              url('../img/mont2.jpg') center/cover no-repeat fixed;
+  filter: blur(8px);
+  transform: scale(1.05);
+  z-index: -1;
 }

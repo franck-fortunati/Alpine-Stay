@@ -1,9 +1,14 @@
 import Chalet from '../models/chaletModel.js';
 
 export const findApprovedChalets = async () => {
-    return await Chalet.find({status: 'Validé'})
+    const chalet = await Chalet.find({status: 'Validé'})
         .populate('owner')
-        .populate('station')
+        .populate('station');
+        
+        console.log('Chalets récupérés :', chalet);
+        console.log('Stations :', chalet.map(c => c.station));
+
+    return chalet
 };
 
 export const findChaletById = async (chaletId) => {
@@ -20,6 +25,7 @@ export const saveChalet = async (data, userId) => {
     const newChalet = new Chalet({
         ...data,
         piedDesPistes: data.piedDesPistes === 'on' || data.piedDesPistes === true,
+        image: data.image,
         owner: userId
     });
 
