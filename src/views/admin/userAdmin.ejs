@@ -1,0 +1,75 @@
+<section class="user p-4">
+    <div class="container-fluid">
+        <h2 class="fw-bold display-5 mb-4">Gestion Utilisateurs</h2>
+        <table class="table table-striped text-center">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Created_at</th>
+                <th scope="col">Updated_at</th>
+                <th scope="col">Supprimer</th>
+            </tr>
+            <% if (typeof users !== 'undefined' && users.length > 0) { %>
+                <% users.forEach((user) => { %>
+                    <tr>
+                        <td><%= user._id %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.role %></td>
+                        <td><%= user.createdAt.toLocaleString('fr-FR', {
+                                    weekday: 'short',
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit'
+                                }).replace(',', ' à') %>
+                        </td>
+                        <td><%= user.updatedAt.toLocaleString('fr-FR', {
+                                    weekday: 'short',
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit'
+                                }).replace(',', ' à') %>
+                        </td>
+                        <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<%= user._id %>"> Supprimer </button></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="7" class="text-muted">Aucun utilisateurs trouvé.</td>
+                </tr>
+            <% } %>
+        </table>
+        <% if (typeof users !== 'undefined' && users.length > 0) { %>
+            <% users.forEach((user) => { %>
+                <div class="modal fade" id="deleteModal-<%= user._id %>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold text-danger">Confirmation de suppression</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                            </div>
+                            <div class="modal-body text-start">
+                                Voulez-vous vraiment supprimer l'utilisateur <strong><%= user.name || user.email %></strong> ?
+                                <p class="text-muted small mt-2 mb-0">Cette action est irréversible.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <form action="/admin/user/<%= user._id %>" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+</section>

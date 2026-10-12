@@ -5,6 +5,7 @@ import {
     getDashboard,
     getAllUser,
     getAllChalet,
+    getAllReservation,
     updateChaletStatus,
     deleteUser
 } from '../controllers/adminController.js';
@@ -14,7 +15,8 @@ const router = express.Router();
 router.get('/', isAdmin, getDashboard);
 router.get('/user', isAdmin, getAllUser);
 router.get('/chalet', isAdmin, getAllChalet);
+router.get('/reservation', isAdmin, getAllReservation)
 router.patch('/chalet/:id/status', isAdmin, updateChaletStatus);
-router.delete('/user/:id', isAdmin, deleteUser)
+router.post('/user/:id', isAdmin, deleteUser)
 
 export default router;

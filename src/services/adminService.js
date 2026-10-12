@@ -24,6 +24,10 @@ export const findAllChalet = async () => {
         .sort({ createdAt: -1 });
 };
 
+export const findAllReservation = async () => {
+    return await Reservation.find().populate('status', 'confirmée');
+};
+
 export const changeChaletStatus = async (chaletId, status) => {
     return await Chalet.findByIdAndUpdate(
         chaletId,

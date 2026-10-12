@@ -2,6 +2,7 @@ import {
     getAdminStats,
     findAllUser,
     findAllChalet,
+    findAllReservation,
     changeChaletStatus,
     removeUser
 } from '../services/adminService.js';
@@ -9,11 +10,15 @@ import {
 export const getDashboard = async (req, res) => {
     try {
         const stats = await getAdminStats();
+        const chalets = await findAllChalet();
+        const reservations = await findAllReservation();
 
         res.render('dashboard', {
             title: 'Admin Dashboard',
             page: 'admin/indexAdmin',
-            stats
+            stats,
+            chalets: chalets || [],
+            reservations: reservations || []
         });
     } catch (err) {
         console.error(err);
@@ -23,12 +28,12 @@ export const getDashboard = async (req, res) => {
 
 export const getAllUser = async (req, res) => {
     try {
-        const user = await findAllUser();
+        const users = await findAllUser();
 
         return res.render('dashboard', {
             title: 'Gestion Utilisateurs',
             page:'admin/userAdmin',
-            user
+            users
         });
     } catch (err) {
         console.error(err);
@@ -38,18 +43,33 @@ export const getAllUser = async (req, res) => {
 
 export const getAllChalet = async (req, res) => {
     try {
-        const chalet = await findAllChalet();
+        const chalets = await findAllChalet();
 
         return res.render('dashboard', {
             title: 'Validation Chalets',
             page: 'admin/chaletAdmin',
-            chalet
+            chalets
         });
     } catch (err) {
         console.error(err);
         return res.status(500).send('Erreur serveur');
     };
 };
+
+export const getAllReservation = async (req, res) => {
+    try {
+        const reservations = await findAllReservation();
+
+        return res.render('dashboard', {
+            title: 'Réservations',
+            page: 'admin/reservationAdmin',
+            reservations
+        })
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Erreur serveur');
+    }
+}
 
 export const updateChaletStatus = async (req, res) => {
     try {

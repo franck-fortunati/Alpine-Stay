@@ -2,17 +2,14 @@
    ALPINE STAY - CHARTE GRAPHIQUE & STYLES GLOBAUX
    ========================================================================== */
 
-/* 1. Variables de couleurs et thèmes */
 :root {
-  /* Palette principale */
   --bg-snow: #f4f6f8;       /* Neige / Fond principal blanc cassé */
   --bg-card: #ffffff;       /* Carte / Blanc pur */
   --blue-alpine: #2c3e50;   /* Bleu Alpin / Couleur primaire */
   --blue-hover: #1a252f;    /* Bleu sombre / Survol des boutons */
   --text-main: #2d3436;     /* Ardoise sombre / Texte principal */
   --text-muted: #636e72;    /* Gris secondaire */
-  
-  /* UI & Ombres */
+
   --border-radius: 12px;
   --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -234,4 +231,30 @@ body {
   filter: blur(8px);
   transform: scale(1.05);
   z-index: -1;
+}
+
+.sidebar {
+  width: 280px;
+  z-index: 1000;
+  inset: 0;
+  background-color: var(--bg-card);
+  transition: all 0.3s ease;
+}
+
+.dashboard {
+  margin-left: 280px;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Quand la checkbox est cochée, on réduit la largeur de la sidebar adjacente */
+#sidebar-toggle:checked + .sidebar {
+    width: 80px;
+}
+
+/* On cache le texte quand la checkbox est cochée */
+#sidebar-toggle:checked + .sidebar .hide-on-collapse {
+    display: none;
 }

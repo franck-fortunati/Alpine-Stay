@@ -1,0 +1,94 @@
+<section class="stats p-4">
+    <div class="container-fluid">
+        <h2 class="fw-bold display-5 mb-4">Tableau de bord</h2>
+        <div class="row">
+            <div class="col-lg-3">
+                 <div class="card-body auth-card bg-white text-center p-3 rounded">
+                    <h5 class="card-title">Utilisateurs</h5>
+                    <p class="card-text fs-1"><%= stats.totalUser %></p>
+                    <a href="/admin/user" class="btn btn-outline-alpine">Tous les utilisateurs</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card-body auth-card bg-white text-center p-3 rounded">
+                    <h5 class="card-title">Réservations</h5>
+                    <p class="card-text fs-1"><%= stats.totalReservation %></p>
+                    <a href="/admin/reservation" class="btn btn-outline-alpine">Toutes les réservations</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card-body auth-card bg-white text-center p-3 rounded">
+                    <h5 class="card-title">Chalets validés</h5>
+                    <p class="card-text fs-1"><%= stats.totalChalet %></p>
+                    <a href="/admin/chalet" class="btn btn-outline-alpine">Tous les chalets</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card-body auth-card bg-white text-center p-3 rounded">
+                    <h5 class="card-title">Chalets en attentes</h5>
+                    <p class="card-text fs-1"><%= stats.pendingChalet %></p>
+                    <a href="/admin/chalet" class="btn btn-outline-alpine">Tous les chalets</a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <h3 class="fw-bold my-4 text-center">Réservations</h3>
+            <table class="table table-striped text-center">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Clients</th>
+                    <th scope="col">Chalets</th>
+                    <th scope="col">Arrivées</th>
+                    <th scope="col">Départs</th>
+                    <th scope="col">Hôtes</th>
+                    <th scope="col">Statuts</th>
+                </tr>
+                <% if (typeof reservations !== 'undefined' && reservations.length > 0) { %>
+                    <% reservations.forEach((reservation) => { %>
+                        <tr>
+                            <td><%= reservation._id %></td>
+                            <td><%= reservation.user ? reservation.user.email : 'N/A' %></td>
+                            <td><%= reservation.chalet ? reservation.chalet.title : 'N/A' %></td>
+                            <td><%= reservation.arrivalDate %></td>
+                            <td><%= reservation.departureDate %></td>
+                            <td><%= reservation.status %></td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7" class="text-muted">Aucune réservation trouvée.</td>
+                    </tr>
+                <% } %>
+            </table>
+            <h3 class="fw-bold my-4 text-center">Chalets</h3>
+            <table class="table table-striped text-center">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Titres</th>
+                    <th scope="col">Prix par Nuits</th>
+                    <th scope="col">Capacités</th>
+                    <th scope="col">Stations</th>
+                    <th scope="col">Hôtes</th>
+                    <th scope="col">Statuts</th>
+                </tr>
+                <% if (typeof chalets !== 'undefined' && chalets.length > 0) { %>
+                    <% chalets.forEach((chalet) => { %>
+                        <tr>
+                            <td><%= chalet._id %></td>
+                            <td><%= chalet.title %></td>
+                            <td><%= chalet.pricePerNight %> €</td>
+                            <td><%= chalet.capacity %> pers.</td>
+                            <td><%= chalet.station ? chalet.station.name : 'N/A' %></td>
+                            <td><%= chalet.owner.email %></td>
+                            <td><%= chalet.status %></td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7" class="text-muted">Aucun chalet disponible.</td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+</section>
