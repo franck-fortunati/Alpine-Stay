@@ -1,5 +1,296 @@
 <section class="chalet p-4">
     <div class="container-fluid">
         <h2 class="fw-bold display-5 mb-4">Gestion Chalets</h2>
+        <ul class="nav nav-tabs mb-4" id="chaletStatusTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending-pane" type="button" role="tab">
+                    En Attente
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold" id="validated-tab" data-bs-toggle="tab" data-bs-target="#validated-pane" type="button" role="tab">
+                    Validés
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled-pane" type="button" role="tab">
+                    Refusés
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="chaletStatusTabsContent">
+            <div class="tab-pane fade show active" id="pending-pane" role="tabpanel">
+                <div class="table-responsive bg-white rounded shadow-sm p-3">
+                    <table class="table table-striped align-middle text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Id</th>
+                                <th>Titres</th>
+                                <th>Prix / Nuits</th>
+                                <th>Capacités</th>
+                                <th>Pied des pistes</th>
+                                <th>Stations</th>
+                                <th>Hôtes</th>
+                                <th>Statuts</th>
+                                <th>Created_At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% const pendingChalets = chalets.filter((chalet) => { %>
+                               <% return chalet.status === 'En attente' %>
+                            <% }) %>
+                            
+                            <% if (pendingChalets.length > 0) { %>
+                                <% pendingChalets.forEach((chalet) => { %>
+                                    <tr>
+                                        <td>
+                                            <% if (chalet.image) { %>
+                                                <img src="/img/<%= chalet.image %>" alt="<%= chalet.title %>" class="rounded object-fit-cover" width="50" height="50">
+                                            <% } else { %>
+                                                <span class="badge bg-secondary">N/A</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= chalet._id %></td>
+                                        <td><%= chalet.title %></td>
+                                        <td><%= chalet.pricePerNight %> €</td>
+                                        <td><%= chalet.capacity %></td>
+                                        <td>
+                                            <% if (chalet.piedDesPistes) { %>
+                                                <span class="badge bg-secondary ">Oui</span>
+                                            <% } else { %>
+                                                <span class="badge bg-secondary ">Non</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= chalet.station.name %></td>
+                                        <td><%= chalet.owner.email %></td>
+                                        <td>
+                                            <% if (chalet.status === "En attente") { %>
+                                                <span class="badge bg-warning text-dark">En attente</span>
+                                            <% } else if (chalet.status === "Refusé") { %>
+                                                <span class="badge bg-danger ">Refusé</span>
+                                            <% } else { %>
+                                                <span class="badge bg-success ">Validé</span>
+                                            <% } %>
+                                         </td>
+                                        <td>
+                                            <%= chalet.createdAt.toLocaleString('fr-FR', {
+                                                weekday: 'short',
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric',
+                                            }) %>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <form action="/admin/chalet/<%= chalet._id %>/status" method="POST" class="d-inline">
+                                                    <input type="hidden" name="status" value="Validé">
+                                                    <button type="submit" class="btn btn-sm btn-success" title="Valider">
+                                                        Valider
+                                                    </button>
+                                                </form>
+                                                
+                                                <form action="/admin/chalet/<%= chalet._id %>/status" method="POST" class="d-inline">
+                                                    <input type="hidden" name="status" value="Refusé">
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="Refuser">
+                                                        Refuser
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr><td colspan="13" class="text-muted">Aucun chalet en attente.</td></tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content" id="chaletStatusTabsContent">
+            <div class="tab-pane fade show" id="validated-pane" role="tabpanel">
+                <div class="table-responsive bg-white rounded shadow-sm p-3">
+                    <table class="table table-striped align-middle text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Id</th>
+                                <th>Titres</th>
+                                <th>Prix / Nuits</th>
+                                <th>Capacités</th>
+                                <th>Pied des pistes</th>
+                                <th>Stations</th>
+                                <th>Hôtes</th>
+                                <th>Statuts</th>
+                                <th>Created_At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% const validatedChalets = chalets.filter((chalet) => { %>
+                               <% return chalet.status === 'Validé' %>
+                            <% }) %>
+                            
+                            <% if (validatedChalets.length > 0) { %>
+                                <% validatedChalets.forEach((chalet) => { %>
+                                    <tr>
+                                        <td>
+                                            <% if (chalet.image) { %>
+                                                <img src="/img/<%= chalet.image %>" alt="<%= chalet.title %>" class="rounded object-fit-cover" width="50" height="50">
+                                            <% } else { %>
+                                                <span class="badge bg-secondary">N/A</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= chalet._id %></td>
+                                        <td><%= chalet.title %></td>
+                                        <td><%= chalet.pricePerNight %> €</td>
+                                        <td><%= chalet.capacity %></td>
+                                        <td>
+                                            <% if (chalet.piedDesPistes) { %>
+                                                <span class="badge bg-secondary">Oui</span>
+                                            <% } else { %>
+                                                <span class="badge bg-secondary">Non</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= chalet.station.name %></td>
+                                        <td><%= chalet.owner.email %></td>
+                                        <td>
+                                            <% if (chalet.status === "En attente") { %>
+                                                <span class="badge bg-warning ">En attente</span>
+                                            <% } else if (chalet.status === "Refusé") { %>
+                                                <span class="badge bg-danger ">Refusé</span>
+                                            <% } else { %>
+                                                <span class="badge bg-success ">Validé</span>
+                                            <% } %>
+                                         </td>
+                                        <td>
+                                            <%= chalet.createdAt.toLocaleString('fr-FR', {
+                                                weekday: 'short',
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric',
+                                            }) %>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <form action="/admin/chalet/<%= chalet._id %>/status" method="POST" class="d-inline">
+                                                    <input type="hidden" name="status" value="En attente">
+                                                    <button type="submit" class="btn btn-sm btn-warning" title="En attente">
+                                                        En attente
+                                                    </button>
+                                                </form>
+                                                
+                                                <form action="/admin/chalet/<%= chalet._id %>/status" method="POST" class="d-inline">
+                                                    <input type="hidden" name="status" value="Refusé">
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="Refuser">
+                                                        Refuser
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr><td colspan="13" class="text-muted">Aucun chalet validé.</td></tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="chaletStatusTabsContent">
+            <div class="tab-pane fade show" id="cancelled-pane" role="tabpanel">
+                <div class="table-responsive bg-white rounded shadow-sm p-3">
+                    <table class="table table-striped align-middle text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Id</th>
+                                <th>Titres</th>
+                                <th>Prix / Nuits</th>
+                                <th>Capacités</th>
+                                <th>Pied des pistes</th>
+                                <th>Stations</th>
+                                <th>Hôtes</th>
+                                <th>Statuts</th>
+                                <th>Created_At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% const cancelledChalets = chalets.filter((chalet) => { %>
+                               <% return chalet.status === 'Refusé' %>
+                            <% }) %>
+                            
+                            <% if (cancelledChalets.length > 0) { %>
+                                <% cancelledChalets.forEach((chalet) => { %>
+                                    <tr>
+                                        <td>
+                                            <% if (chalet.image) { %>
+                                                <img src="/img/<%= chalet.image %>" alt="<%= chalet.title %>" class="rounded object-fit-cover" width="50" height="50">
+                                            <% } else { %>
+                                                <span class="badge bg-secondary">N/A</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= chalet._id %></td>
+                                        <td><%= chalet.title %></td>
+                                        <td><%= chalet.pricePerNight %> €</td>
+                                        <td><%= chalet.capacity %></td>
+                                        <td>
+                                            <% if (chalet.piedDesPistes) { %>
+                                                <span class="badge bg-secondary">Oui</span>
+                                            <% } else { %>
+                                                <span class="badge bg-secondary ">Non</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= chalet.station.name %></td>
+                                        <td><%= chalet.owner.email %></td>
+                                        <td>
+                                            <% if (chalet.status === "En attente") { %>
+                                                <span class="badge bg-warning ">En attente</span>
+                                            <% } else if (chalet.status === "Refusé") { %>
+                                                <span class="badge bg-danger ">Refusé</span>
+                                            <% } else { %>
+                                                <span class="badge bg-success ">Validé</span>
+                                            <% } %>
+                                         </td>
+                                        <td>
+                                            <%= chalet.createdAt.toLocaleString('fr-FR', {
+                                                weekday: 'short',
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric',
+                                            }) %>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-1 justify-content-center">
+                                                <form action="/admin/chalet/<%= chalet._id %>/status" method="POST" class="d-inline">
+                                                    <input type="hidden" name="status" value="En attente">
+                                                    <button type="submit" class="btn btn-sm btn-warning" title="En attente">
+                                                        En attente
+                                                    </button>
+                                                </form>
+                                                
+                                                <form action="/admin/chalet/<%= chalet._id %>/status" method="POST" class="d-inline">
+                                                    <input type="hidden" name="status" value="Validé">
+                                                    <button type="submit" class="btn btn-sm btn-success" title="Valider">
+                                                        Validé
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr><td colspan="13" class="text-muted">Aucun chalet refusé.</td></tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </section>

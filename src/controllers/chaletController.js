@@ -14,7 +14,7 @@ export const getAllChalet = async (req, res) => {
         return res.render('layout', {
             title: 'Nos Chalets',
             page: 'pages/annonces',
-            chalets
+            chalets: chalets
         });
     } catch (err) {
         console.error(err); 
@@ -25,11 +25,11 @@ export const getAllChalet = async (req, res) => {
 export const getChaletById = async (req, res) => {
     try {
         const chaletId = req.params.id;
-        const chalet = await findChaletById(chaletId);
+        const chalets = await findChaletById(chaletId);
         return res.render('pages/chalet', {
             title: chalet.title,
             page: 'pages/chalet',
-            chalet
+            chalets
         });
     } catch (err) {
         console.error(err);
@@ -54,12 +54,12 @@ export const getChaletForm = async (req, res) => {
 export const getEditChaletForm = async (req, res) => {
     try {
         const chaletId = req.params.id;
-        const chalet = await findChaletById(chaletId);
+        const chalets = await findChaletById(chaletId);
         const stations = await findAllStations();
         return res.render('layout', {
             title: 'Modifier un Chalet',
             page: 'pages/chaletEditForm',
-            chalet,
+            chalets,
             stations
         });
     } catch (err) {
@@ -71,11 +71,11 @@ export const getEditChaletForm = async (req, res) => {
 export const getMyChalet = async (req, res) => {
     try {
         const ownerId = req.session.user._id;
-        const chalet = await findChaletByOwnerId(ownerId);
+        const chalets = await findChaletByOwnerId(ownerId);
         return res.render('layout', {
             title: 'Mes Locations',
             page: 'pages/myLocation',
-            chalet
+            chalets
         });
     } catch (err) {
         console.error(err);

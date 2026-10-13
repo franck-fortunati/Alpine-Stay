@@ -35,20 +35,20 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     try {
-        const chalet = Chalet.find().sort({ createdAt: -1 }).limit(3);
+        const chalets = await Chalet.find({ status: 'Validé' }).sort({ createdAt: -1 }).limit(3);
         res.render('layout', {
             title: 'Accueil',
             page: 'pages/index',
-            chalet: chalet
+            chalets
         });
     } catch (err) {
-        console.error("Erreur lors de la récupération des chalets :", error);
+        console.error("Erreur lors de la récupération des chalets :", err);
         res.render('layout', {
             title: 'Accueil',
             page: 'pages/index',
-            chalet: []
+            chalets: []
         });
     }
 });

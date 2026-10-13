@@ -5,9 +5,6 @@ export const findApprovedChalets = async () => {
         .populate('owner')
         .populate('station');
         
-        console.log('Chalets récupérés :', chalet);
-        console.log('Stations :', chalet.map(c => c.station));
-
     return chalet
 };
 

@@ -80,7 +80,15 @@
                             <td><%= chalet.capacity %> pers.</td>
                             <td><%= chalet.station ? chalet.station.name : 'N/A' %></td>
                             <td><%= chalet.owner.email %></td>
-                            <td><%= chalet.status %></td>
+                            <td>
+                                <% if (chalet.status === "En attente") { %>
+                                    <span class="badge bg-warning text-dark">En attente</span>
+                                <% } else if (chalet.status === "Refusé") { %>
+                                    <span class="badge bg-danger text-white">Refusé</span>
+                                <% } else { %>
+                                    <span class="badge bg-success text-white">Validé</span>
+                                <% } %>
+                            </td>
                         </tr>
                     <% }) %>
                 <% } else { %>
