@@ -26,10 +26,12 @@ export const getChaletById = async (req, res) => {
     try {
         const chaletId = req.params.id;
         const chalets = await findChaletById(chaletId);
-        return res.render('pages/chalet', {
-            title: chalet.title,
+        const today = new Date().toISOString().split('T')[0];
+        return res.render('layout', {
+            title: chalets.title,
             page: 'pages/chalet',
-            chalets
+            chalets,
+            today
         });
     } catch (err) {
         console.error(err);

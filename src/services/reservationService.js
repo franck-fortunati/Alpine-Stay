@@ -1,30 +1,29 @@
 import Chalet from "../models/chaletModel.js";
 import Reservation from "../models/reservationModel.js";
 
-export const calculateReservationLogic = (arrivalDate, departureDate, pricePerNight, formule, isPeakSeason) => {
-    arrivalDate = new Date(arrivalDate);
-    departureDate = new Date(departureDate);
+export const calculateReservationLogic = (arrivalDate, departureDate, pricePerNight, formule, persons) => {
+    const arrival = new Date(arrivalDate);
+    const departure = new Date(departureDate);
 
-    const dateDifferenceMs = departureDate - arrivalDate;
-    const totalNights = dateDifferenceMs / (1000 * 60 * 60 * 24);
-    let multiplier;
+    const dateDifferenceMs = departure - arrival;
+    const totalNights = Math.ceil(dateDifferenceMs / (1000 * 60 * 60 * 24));
 
-    if(formule === 'luxe') {
+    let multiplier = 1.0;
+    if (formule === 'luxe') {
         multiplier = 1.5;
     } else if (formule === 'premium') {
         multiplier = 1.2;
-    } else {
-        multiplier = 1.0;
-    };
+    }
 
-    let totalPrice = totalNights * pricePerNight * multiplier;
-
-    if(isPeakSeason === true) {
-        totalPrice *= 1.20;
-    };
+    const priceHT = totalNights * pricePerNight * multiplier;
+    const taxRatePerPersonPerNight = 2.00;
+    const touristTax = totalNights * persons * taxRatePerPersonPerNight;
+    const totalPrice = priceHT + touristTax;
 
     return {
         nights: totalNights,
+        priceHT: Number(priceHT.toFixed(2)),
+        touristTax: Number(touristTax.toFixed(2)),
         totalPrice: Number(totalPrice.toFixed(2))
     };
 };
@@ -42,6 +41,10 @@ export const findReservationsByUserId = async (userId) => {
         path: 'chalet',
         populate: { path: 'station' }
     });
+};
+
+export const findExistingReservations = async (chaletId) => {
+    return await Reservation.find({chalet: chaletId, status: { $in: ['En attente', 'Confirmée'] }}).select('arrivalDate departureDate');
 };
 
 export const updateReservationStatus = async (reservationId, userId) => {

@@ -15,11 +15,11 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 text-start">
                     <label class="form-label text-white fw-semibold mb-1" for="date">Départ</label>
-                    <input class="form-control form-control-lg" type="date" name="date" id="date">
+                    <input class="form-control form-control-lg" type="date" name="date" id="date" min="<%= today %>">
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 text-start">
                     <label class="form-label text-white fw-semibold mb-1" for="date2">Arrivée</label>
-                    <input class="form-control form-control-lg" type="date" name="date" id="date">
+                    <input class="form-control form-control-lg" type="date" name="date" id="date" min="<%= today %>">
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 text-start">
                     <button class="btn btn-lg btn-alpine fw-semibold w-100" type="submit">Rechercher</button>

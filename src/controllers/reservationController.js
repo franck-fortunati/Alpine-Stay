@@ -1,5 +1,6 @@
 import {
     findReservationsByUserId,
+    findExistingReservations,
     calculateReservationLogic,
     saveReservation,
     updateReservationStatus,
@@ -9,11 +10,18 @@ import { findChaletById } from '../services/chaletService.js';
 
 export const getChaletById = async (req, res) => {
     try {
-        const chalet = await findChaletById(req.params.chaletId);
+        const userEmail = req.session.user.email;
+        const today = new Date().toISOString().split('T')[0];
+        const chalets = await findChaletById(req.params.chaletId);
+        const existingReservations = await findExistingReservations(req.params.chaletId);
+
         return res.render('layout', {
             title: 'Réserver un Chalet',
             page: 'pages/reservationForm',
-            chalet
+            chalets,
+            today,
+            userEmail,
+            existingReservations: JSON.stringify(existingReservations)
         });
     } catch (err) {
         console.error(err);

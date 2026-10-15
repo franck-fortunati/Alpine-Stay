@@ -1,0 +1,79 @@
+<section class="chaletById">
+    <div class="container p-5">
+        <div class="row w-100">
+            <div class="col-lg-8 ">
+                <div class="card shadow-sm border-0 overflow-hidden my-4">
+                    <div class="position-relative">
+                        <img class="card-img-top object-fit-cover w-100" src="/img/<%= chalets.image %>" alt="<%= chalets.title %>" style="height: 420px;">
+                    </div>
+                    <div class="card-body p-4">
+                        <h1 class="display-6 fw-semibold mb-4"><%= chalets.title %></h2>
+                        <div class="row py-3 my-2 bg-light rounded-3 text-center border">
+                            <div class="col-6 col-md-3">
+                                <div class="p-2">
+                                    <i class="bi bi-people text-alpine fs-2 d-block mb-1"></i>
+                                    <span class="text-muted small d-block">Capacité</span>
+                                    <strong class="fs-6 text-dark"><%= chalets.capacity %> personnes</strong>
+                                </div>
+                            </div>
+                
+                            <div class="col-6 col-md-3">
+                                <div class="p-2">
+                                    <i class="bi bi-house-check text-alpine fs-2 d-block mb-1"></i>
+                                    <span class="text-muted small d-block">Au pied des pistes</span>
+                                    <strong class="fs-6 text-dark">
+                                        <%= chalets.piedDesPistes ? 'Oui' : 'Non' %>
+                                    </strong>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <div class="p-2">
+                                    <i class="bi bi-signpost-split text-alpine fs-2 d-block mb-1"></i>
+                                    <span class="text-muted small d-block">Station</span>
+                                    <strong class="fs-6 text-dark"><%= chalets.station ? chalets.station.name : 'Non spécifiée' %></strong>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <div class="p-2">
+                                    <i class="bi bi-moon-stars text-alpine fs-2 d-block mb-1"></i>
+                                    <span class="text-muted small d-block">Tarif</span>
+                                    <strong class="fs-6 text-alpine"><%= chalets.pricePerNight %> € / nuit</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="fw-bold fs-5">À propos de ce logement</h3>
+                            <p class="card-text lh-base" style="white-space: pre-line;">
+                                <%= chalets.description %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 my-4">
+                <div class="card shadow-sm border position-sticky" style="top: 20px; z-index: 10;">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold text-alpine mb-3"><%= chalets.pricePerNight %> € <span class="fs-6 text-muted">/ nuit</span></h4>
+                        <hr>
+                        <form action="/reservation/new/<%= chalets._id %>" method="GET">
+                            <input type="hidden" name="chaletId" value="<%= chalets._id %>">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold small">Date d'arrivée</label>
+                                <input type="date" class="form-control" min="<%= today %>" name="arrivalDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold small">Date de départ</label>
+                                <input type="date" class="form-control" min="<%= today %>" name="departureDate" required>
+                            </div>
+                            <button type="submit" class="btn btn-alpine w-100 py-2 fw-semibold">
+                                Réserver maintenant
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

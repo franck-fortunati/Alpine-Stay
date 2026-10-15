@@ -1,0 +1,104 @@
+<section class="reservationForm">
+    <div class="container d-flex justify-content-center my-5">
+        <div class="card w-75 d-flex shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="text-center">Réservation Chalet</h1>
+                <hr class="mb-4">
+                <div class="my-4">
+                    <div class="chaletTitle d-flex align-items-end">
+                        <label class="form-label me-3">Chalet sélectionné :</label>
+                        <input class="form-control text-center fw-bold w-50" type="text" value="<%= chalets.title %>" disabled>
+                    </div>
+                    <div class="row py-3 my-3 bg-light rounded-3 text-center border">
+                        <div class="col-6 col-md-3">
+                            <div class="p-2">
+                                <i class="bi bi-people text-alpine fs-2 d-block mb-1"></i>
+                                <span class="text-muted small d-block">Capacité</span>
+                                <strong class="fs-6 text-dark"><%= chalets.capacity %> personnes</strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-2">
+                                <i class="bi bi-house-check text-alpine fs-2 d-block mb-1"></i>
+                                <span class="text-muted small d-block">Au pied des pistes</span>
+                                <strong class="fs-6 text-dark">
+                                    <%= chalets.piedDesPistes ? 'Oui' : 'Non' %>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-2">
+                                <i class="bi bi-signpost-split text-alpine fs-2 d-block mb-1"></i>
+                                <span class="text-muted small d-block">Station</span>
+                                <strong class="fs-6 text-dark"><%= chalets.station ? chalets.station.name : 'Non spécifiée' %></strong>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-2">
+                                <i class="bi bi-moon-stars text-alpine fs-2 d-block mb-1"></i>
+                                <span class="text-muted small d-block">Tarif</span>
+                                <strong class="fs-6 text-alpine"><%= chalets.pricePerNight %> € / nuit</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-4">
+                    <div class="col-lg-4">
+                        <label class="form-label fw-semibold small">Prénom</label>
+                        <input type="text" class="form-control" min="<%= today %>" name="arrivalDate" placeholder="Jean" required>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label fw-semibold small">Nom</label>
+                        <input type="text" class="form-control" min="<%= today %>" name="departureDate" placeholder="Dupont" required>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label">Email :</label>
+                        <input class="form-control text-center" type="email" value="<%= userEmail %>" disabled>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-4">
+                        <label class="form-label fw-semibold small">Date d'arrivée</label>
+                        <input type="date" class="form-control" id="arrivalDate" min="<%= today %>" name="arrivalDate" required>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="form-label fw-semibold small">Date de départ</label>
+                        <input type="date" class="form-control" id="arrivalDate" min="<%= today %>" name="arrivalDate" required>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <label class="form-label fw-semibold small">Nombre de personnes</label>
+                        <input type="number" class="form-control" name="persons" min="1" max="<%= chalets.capacity %>" value="1" required>
+                    </div>
+                </div>
+                <label class="form-label fw-semibold mb-2">Choisissez votre formule :</label>
+                <div class="row mb-4">
+                    <div class="col-lg-4">
+                        <div class="border rounded text-center p-4 h-100 shadow-sm">
+                            <input class="form-check-input mb-2" type="radio" name="formule" id="formuleStandard" value="standard" checked>
+                            <label class="form-check-label d-block fw-bold" for="formuleStandard">Standard</label>
+                            <span class="badge bg-secondary mb-2">Prix de base</span>
+                            <p class="small text-muted mb-0">Draps, serviettes, savon & Wifi 6 inclus.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="border rounded text-center p-4 h-100 shadow-sm">
+                            <input class="form-check-input mb-2" type="radio" name="formule" id="formulePremium" value="premium">
+                            <label class="form-check-label d-block fw-bold" for="formulePremium">Premium (+20%)</label>
+                            <span class="badge bg-primary mb-2">Confort</span>
+                            <p class="small text-muted mb-0">Formule Standard + Ménage de fin de séjour & petits-déjeuners.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="border rounded text-center p-4 h-100 shadow-sm">
+                            <input class="form-check-input mb-2" type="radio" name="formule" id="formuleLuxe" value="luxe">
+                            <label class="form-check-label d-block fw-bold" for="formuleLuxe">Luxe (+50%)</label>
+                            <span class="badge bg-warning text-dark mb-2">Haut de gamme</span>
+                            <p class="small text-muted mb-0">Formule Premium + Accès Spa/Sauna privé & forfaits livrés.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

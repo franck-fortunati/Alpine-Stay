@@ -38,10 +38,12 @@ app.use((req, res, next) => {
 app.get('/', async (req, res) => {
     try {
         const chalets = await Chalet.find({ status: 'Validé' }).sort({ createdAt: -1 }).limit(3);
+        const today = new Date().toISOString().split('T')[0];
         res.render('layout', {
             title: 'Accueil',
             page: 'pages/index',
-            chalets
+            chalets,
+            today
         });
     } catch (err) {
         console.error("Erreur lors de la récupération des chalets :", err);
